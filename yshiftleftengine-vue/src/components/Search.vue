@@ -12,7 +12,7 @@
       </div>
       <div class="search-Button">
         <el-button round style="background-color: #f8f9fa">开始搜索</el-button>
-        <el-button round style="background-color: #f8f9fa">手气不错</el-button>
+        <el-button round style="background-color: #f8f9fa">随便看看</el-button>
       </div>
     </div>
   </div>
