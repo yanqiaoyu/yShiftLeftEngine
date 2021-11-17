@@ -6,7 +6,11 @@
         <img src="../assets/cat.png" alt />
       </div>
       <div>
-        <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
+        <el-input
+          placeholder="请输入搜索内容"
+          v-model="input3"
+          class="input-with-select"
+        >
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </div>
@@ -22,11 +26,11 @@
 export default {
   data() {
     return {
-      input3: '',
-      select: '',
-    }
+      input3: "",
+      select: "",
+    };
   },
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -37,7 +41,7 @@ export default {
 
 .search-Input {
   width: 582px;
-  height: 20%;
+  // height: 20%;
   background-color: #fff;
   border-radius: 3px;
   // 位置采用绝对位置
@@ -47,6 +51,7 @@ export default {
   top: 50%;
   // 然后再向左，向上位移50%
   transform: translate(-50%, -50%);
+  min-height: 200px;
 }
 
 .input-with-select .el-input-group__prepend {
