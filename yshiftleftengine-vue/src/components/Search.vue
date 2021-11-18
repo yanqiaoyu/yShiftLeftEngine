@@ -1,22 +1,24 @@
 <template>
   <div class="search-Container">
     <div class="search-Input">
-      <div class="login_image">
+      <div class="login-Image">
         <!-- 登录的图片 -->
         <img src="../assets/cat.png" alt />
       </div>
       <div>
         <el-input
           placeholder="请输入搜索内容"
-          v-model="input3"
+          v-model="queryInfo.searchInput"
           class="input-with-select"
         >
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
       </div>
       <div class="search-Button">
-        <el-button round style="background-color: #f8f9fa">开始搜索</el-button>
-        <el-button round style="background-color: #f8f9fa">随便看看</el-button>
+        <el-button round class="my-Button" @click="Search">开始搜索</el-button>
+        <el-button round class="my-Button" @click="RandomSearch"
+          >随便看看</el-button
+        >
       </div>
     </div>
   </div>
@@ -26,17 +28,44 @@
 export default {
   data() {
     return {
-      input3: "",
-      select: "",
-    };
+      queryInfo: {
+        searchInput: '',
+      },
+    }
   },
-};
+  methods: {
+    // 搜索经验
+    async Search() {
+      // 如果没有填写搜索内容，参考百度的做法刷新页面
+      if (this.queryInfo.searchInput.trim() == '') {
+        this.$router.go(0)
+        return
+      }
+
+      // const { data: res } = await this.$http.get('search', {
+      //   params: this.queryInfo,
+      // })
+
+      // console.log(res)
+      this.$router.push({
+        path: '/results',
+        query: this.queryInfo,
+      })
+    },
+    // 随机看一条经验
+    async RandomSearch() {},
+  },
+}
 </script>
 
 <style lang="less" scoped>
 .search-Container {
   //   background-color: #2b4b6b;
   height: 100%;
+}
+
+.my-Button {
+  background-color: #f8f9fa;
 }
 
 .search-Input {
@@ -71,7 +100,7 @@ export default {
 }
 
 // 登录的图片
-.login_image {
+.login-Image {
   width: 130px;
   height: 130px;
   // 给这个图片添加一个正方形的灰色边框
