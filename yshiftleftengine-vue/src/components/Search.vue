@@ -10,8 +10,13 @@
           placeholder="请输入搜索内容"
           v-model="queryInfo.searchInput"
           class="input-with-select"
+          @keyup.enter.native="Search"
         >
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="Search"
+          ></el-button>
         </el-input>
       </div>
       <div class="search-Button">

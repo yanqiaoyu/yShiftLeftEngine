@@ -20,7 +20,7 @@ const routes = [
     component: Results,
     meta: {
       // 页面标题title
-      title: '结果'
+      title: ''
     }
   }
 ]
