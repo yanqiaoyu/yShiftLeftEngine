@@ -9,7 +9,8 @@ import {
   Header,
   Avatar,
   Empty,
-  Card
+  Card,
+  Divider
 } from 'element-ui'
 
 Vue.use(Button)
@@ -22,3 +23,4 @@ Vue.use(Header)
 Vue.use(Avatar)
 Vue.use(Empty)
 Vue.use(Card)
+Vue.use(Divider)
