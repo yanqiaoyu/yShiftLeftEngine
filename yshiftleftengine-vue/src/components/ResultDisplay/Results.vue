@@ -8,6 +8,7 @@
         v-model="queryInfo.searchInput"
         class="searchInput"
         @keyup.enter.native="Search"
+        clearable
       >
         <el-button slot="append" icon="el-icon-search" @click="Search"></el-button>
       </el-input>
