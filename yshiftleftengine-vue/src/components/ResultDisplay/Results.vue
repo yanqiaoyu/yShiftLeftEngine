@@ -2,7 +2,11 @@
   <el-container class="resultsDisplay">
     <el-header>
       <!-- 猫猫图 -->
-      <el-avatar :size="80" fit="fit" :src="require('../../assets/cat.png')"></el-avatar>
+      <el-avatar
+        :size="80"
+        fit="fit"
+        :src="require('../../assets/cat.png')"
+      ></el-avatar>
       <el-input
         placeholder="请输入搜索内容"
         v-model="queryInfo.searchInput"
@@ -10,16 +14,28 @@
         @keyup.enter.native="Search"
         clearable
       >
-        <el-button slot="append" icon="el-icon-search" @click="Search"></el-button>
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="Search"
+        ></el-button>
       </el-input>
     </el-header>
     <el-main>
       <div class="divContainsMainAndOthers">
         <div class="mainContent">
           <div class="resultStats">找到约 90,800 条结果 （用时 0.54 秒）</div>
-          <el-card class="card-mainContent" shadow="hover" v-for="p in 10" :key="p">
-            <div v-for="o in 4" :key="o" class="text item">{{ '列表内容 ' + o }}</div>
-          </el-card>
+          <div v-for="p in 100" :key="p">{{ p }}</div>
+          <!-- <el-card
+            class="card-mainContent"
+            shadow="hover"
+            v-for="p in 10"
+            :key="p"
+          >
+            <div v-for="o in 4" :key="o" class="text item">
+              {{ '列表内容 ' + o }}
+            </div>
+          </el-card> -->
         </div>
         <div class="mainOthers">其他展示</div>
       </div>

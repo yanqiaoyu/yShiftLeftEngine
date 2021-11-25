@@ -1,9 +1,17 @@
-import uvicorn
-
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
 from routers import search
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
+import uvicorn
+import sys
+import os
+# 把根目录添加进系统目录
+sys.path.append(os.pardir)
+
+from ysle_api.common import ES
+
+from ysle_api.dao import ElasticSearchBase
+
+es = ES.connectES()
 
 app = FastAPI()
 
@@ -28,8 +36,11 @@ def init():
 
 def main():
     init()
-    uvicorn.run(app="run:app", host="0.0.0.0",
-                port=80, reload=True, debug=True)
+    uvicorn.run(app="run:app",
+                host="0.0.0.0",
+                port=80,
+                reload=True,
+                debug=True)
 
 
 if __name__ == '__main__':
