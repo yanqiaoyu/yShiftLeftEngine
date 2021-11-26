@@ -10,10 +10,10 @@ class ES():
     def connectES():
         global es
         if es == None:
-            es = Elasticsearch(es_host,
-                               sniff_on_start=True,
-                               sniff_on_connection_fail=True,
-                               sniff_timeout=5)
+            es = Elasticsearch(
+                hosts=es_host,
+                port=9200,
+            )
         return es
 
 
