@@ -10,7 +10,8 @@ import {
   Avatar,
   Empty,
   Card,
-  Divider
+  Divider,
+  Link
 } from 'element-ui'
 
 Vue.use(Button)
@@ -24,3 +25,4 @@ Vue.use(Avatar)
 Vue.use(Empty)
 Vue.use(Card)
 Vue.use(Divider)
+Vue.use(Link)

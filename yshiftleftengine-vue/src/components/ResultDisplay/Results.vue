@@ -25,17 +25,20 @@
       <div class="divContainsMainAndOthers">
         <div class="mainContent">
           <div class="resultStats">找到约 90,800 条结果 （用时 0.54 秒）</div>
-          <div v-for="p in 100" :key="p">{{ p }}</div>
-          <!-- <el-card
+
+          <el-card
             class="card-mainContent"
-            shadow="hover"
-            v-for="p in 10"
+            shadow="never"
+            v-for="p in 5"
             :key="p"
           >
-            <div v-for="o in 4" :key="o" class="text item">
-              {{ '列表内容 ' + o }}
-            </div>
-          </el-card> -->
+            <el-link
+              @click="showResultDetail"
+              :underline="false"
+              target="_blank"
+              >标题</el-link
+            >
+          </el-card>
         </div>
         <div class="mainOthers">其他展示</div>
       </div>
@@ -59,6 +62,13 @@ export default {
   methods: {
     // 搜索经验
     async Search() {},
+    // 查看经验的细节
+    showResultDetail() {
+      this.$router.push({
+        path: '/resultdetail',
+        // query: this.queryInfo,
+      })
+    },
   },
 }
 </script>
@@ -121,7 +131,7 @@ export default {
   margin-left: 100px;
 }
 
-// 其与内容
+// 其他内容
 .mainOthers {
   height: 100%;
   flex: 1;
@@ -130,7 +140,8 @@ export default {
 
 // 卡片
 .card-mainContent {
-  margin-top: 20px;
+  // 上下有个15px的空隙，左右则没有，与搜索结果展示与用时对齐
+  margin: 15px 0;
   width: 630px;
   height: 200px;
 }
