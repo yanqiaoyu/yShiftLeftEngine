@@ -1,0 +1,94 @@
+<template>
+  <div class="divContainsMainAndOthers">
+    <div class="mainContent">
+      <div class="resultStats">
+        找到 90,800 条关于 {{ queryInfo.searchInput }} 的结果 （用时 0.54 秒）
+      </div>
+
+      <el-card class="card-mainContent" shadow="never" v-for="p in 5" :key="p">
+        <el-link @click="showResultDetail" :underline="false" class="exp-title"
+          >标题</el-link
+        >
+      </el-card>
+    </div>
+    <div class="mainOthers">其他展示</div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      queryInfo: {
+        searchInput: this.$route.query.searchInput,
+      },
+    }
+  },
+  mounted() {},
+  methods: {
+    // 查看经验的细节
+    showResultDetail() {
+      this.$router.push({
+        path: '/resultdetail',
+        // query: this.queryInfo,
+      })
+    },
+  },
+}
+</script>
+
+<style lang="less" scoped>
+// 搜索结果的数量与花费的时间
+.resultStats {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  width: 630px;
+  height: 43px;
+  color: #70757a;
+}
+
+// 搜索结果以card的结果展示
+.el-card {
+  border: 0;
+}
+
+// 用来包裹主体搜索结果以及其与内容的div，用于解决滚动时，header的阴影条消失的问题
+.divContainsMainAndOthers {
+  overflow-y: auto;
+  width: 100%;
+  display: flex;
+}
+
+// 主体内容
+.mainContent {
+  height: 100%;
+  width: 700px;
+  margin-left: 100px;
+}
+
+// 其他内容
+.mainOthers {
+  height: 100%;
+  flex: 1;
+  margin-left: 50px;
+}
+
+// 卡片
+.card-mainContent {
+  // 上下有个15px的空隙，左右则没有，与搜索结果展示与用时对齐
+  margin: 15px 0;
+  width: 630px;
+  height: 200px;
+}
+
+.el-card /deep/ .el-card__body {
+  padding: 0px !important;
+}
+
+// 经验标题
+.exp-title {
+  color: #202020 !important;
+  font: 19.2px sans-serif;
+}
+</style>

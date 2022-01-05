@@ -12,12 +12,18 @@
           class="input-with-select"
           @keyup.enter.native="Search"
         >
-          <el-button slot="append" icon="el-icon-search" @click="Search"></el-button>
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="Search"
+          ></el-button>
         </el-input>
       </div>
       <div class="search-Button">
         <el-button round class="my-Button" @click="Search">开始搜索</el-button>
-        <el-button round class="my-Button" @click="RandomSearch">随便看看</el-button>
+        <el-button round class="my-Button" @click="RandomSearch"
+          >随便看看</el-button
+        >
       </div>
     </div>
   </div>

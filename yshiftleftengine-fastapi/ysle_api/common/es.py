@@ -1,6 +1,5 @@
 from elasticsearch import Elasticsearch
-
-es_host = "103.44.241.227"
+from common.read_yaml import readYamlHandler
 
 es = None
 
@@ -21,13 +20,17 @@ class ES():
     @staticmethod
     def connectES():
         global es
+        esHost = readYamlHandler.read_conf()['elasticsearch']['esAddress']
+        esPort = readYamlHandler.read_conf()['elasticsearch']['esPort']
         if es == None:
             es = Elasticsearch(
-                hosts=es_host,
-                port=9200,
+                hosts=esHost,
+                port=esPort,
             )
         return es
 
+
+esHandler = ES.connectES()
 
 if __name__ == "__main__":
     es = ES.connectES()

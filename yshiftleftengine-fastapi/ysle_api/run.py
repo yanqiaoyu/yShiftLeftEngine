@@ -7,14 +7,13 @@ import os
 # 把根目录添加进系统目录
 sys.path.append(os.pardir)
 
-from ysle_api.common import ES
-
-from ysle_api.dao import ElasticSearchBase
-
-es = ES.connectES()
+from common.read_yaml import readYamlHandler
 
 app = FastAPI()
-
+'''
+https://fastapi.tiangolo.com/zh/tutorial/cors/
+来自官网的处理跨域请求的方法
+'''
 # 处理跨域请求
 app.add_middleware(
     CORSMiddleware,
@@ -30,17 +29,19 @@ app.add_middleware(
 app.include_router(search.searchRouter)
 
 
-def init():
-    pass
+# 初始化api服务
+def initAPIService():
+    bindAddress = readYamlHandler.read_conf()['apiService']['bindAddress']
+    bindPort = readYamlHandler.read_conf()['apiService']['bindPort']
+    uvicorn.run(app="run:app",
+                host=bindAddress,
+                port=bindPort,
+                reload=True,
+                debug=True)
 
 
 def main():
-    init()
-    uvicorn.run(app="run:app",
-                host="0.0.0.0",
-                port=80,
-                reload=True,
-                debug=True)
+    initAPIService()
 
 
 if __name__ == '__main__':
