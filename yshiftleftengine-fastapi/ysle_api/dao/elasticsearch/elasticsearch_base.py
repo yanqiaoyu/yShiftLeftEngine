@@ -2,22 +2,23 @@ from common.es import esHandler
 
 
 class ElasticSearchBase:
-    # 查询所有索引
     def GetAllIndices():
+        '''
+        查询所有索引,排除了.开头的内部索引
+        '''
+        result = []
         for index in esHandler.indices.get('*'):
             if index[0] == '.':
                 pass
             else:
-                print(index)
+                result.append(index)
+        return result
 
-    # 查询特定索引下面所有的内容
     def GetAllDocs(indexName):
-        result = esHandler.search(index=indexName,
-                                  doc_type="doc",
-                                  body={
-                                      'size': 10000,
-                                      'query': {
-                                          'match_all': {}
-                                      }
-                                  })
-        print(result)
+        '''
+        查询特定索引下面所有的文档
+        '''
+        return esHandler.search(index=indexName)
+
+    def InsertNewDoc(index, doc):
+        return esHandler.index(index=index, document=doc)

@@ -34,6 +34,7 @@ export default {
     return {
       queryInfo: {
         searchInput: this.$route.query.searchInput,
+        searchResult: [],
       },
     }
   },
@@ -46,7 +47,9 @@ export default {
     // 搜索经验
     async Search() {
       const { data: res } = await this.$http.get('search')
-      console.log(res)
+      const exp_array = res['data']['hits']['hits']
+      console.log(exp_array)
+      this.queryInfo.searchResult = exp_array
 
       this.$router.push({
         path: '/resultgeneral',

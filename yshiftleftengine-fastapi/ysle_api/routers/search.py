@@ -8,6 +8,6 @@ searchRouter = APIRouter()
 # 查询经验
 @searchRouter.get("/search")
 async def GetSearchResult():
-    dao.ElasticSearchBase.GetAllIndices()
-    dao.ElasticSearchBase.GetAllDocs('api')
-    return {"message": "Hello World"}
+    # dao.ElasticSearchBase.InsertNewDoc(index='hello', doc=mappings2)
+    result = dao.ElasticSearchBase.GetAllDocs('hello')
+    return {"data": result, "meta": {}}

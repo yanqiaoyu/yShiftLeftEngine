@@ -2,12 +2,21 @@
   <div class="divContainsMainAndOthers">
     <div class="mainContent">
       <div class="resultStats">
-        找到 90,800 条关于 {{ queryInfo.searchInput }} 的结果 （用时 0.54 秒）
+        找到 {{ queryInfo.searchResult.length }} 条关于
+        {{ queryInfo.searchInput }} 的结果 （用时 0.54 秒）
       </div>
 
-      <el-card class="card-mainContent" shadow="never" v-for="p in 5" :key="p">
-        <el-link @click="showResultDetail" :underline="false" class="exp-title"
-          >标题</el-link
+      <el-card
+        class="card-mainContent"
+        shadow="never"
+        v-for="exp in queryInfo.searchResult"
+        :key="exp"
+      >
+        <el-link
+          @click="showResultDetail"
+          :underline="false"
+          class="exp-title"
+          >{{ exp._source.title }}</el-link
         >
       </el-card>
     </div>
@@ -21,10 +30,13 @@ export default {
     return {
       queryInfo: {
         searchInput: this.$route.query.searchInput,
+        searchResult: this.$route.query.searchResult,
       },
     }
   },
-  mounted() {},
+  mounted() {
+    // console.log(this.queryInfo)
+  },
   methods: {
     // 查看经验的细节
     showResultDetail() {
