@@ -23,6 +23,7 @@
     </el-header>
     <el-main>
       <!-- 路由占位符, 有了这个占位符,通过路由匹配到的组件才会在这里展示 -->
+      <!-- 这里对应着2个组件，一个是所有搜索结果的展示，一个是单个搜索结果细节的展示 -->
       <router-view></router-view>
     </el-main>
   </el-container>
@@ -34,11 +35,10 @@ export default {
     return {
       queryInfo: {
         searchInput: this.$route.query.searchInput,
-        searchResult: [],
       },
     }
   },
-  mounted() {
+  created() {
     //  创建时就改好页面的标题，参考百度，取搜索内容作为标题
     document.title = this.$route.query.searchInput + '的搜索结果'
     this.Search()
@@ -46,15 +46,13 @@ export default {
   methods: {
     // 搜索经验
     async Search() {
-      const { data: res } = await this.$http.get('search')
-      const exp_array = res['data']['hits']['hits']
-      console.log(exp_array)
-      this.queryInfo.searchResult = exp_array
-
-      this.$router.push({
+      // 搜索的实际请求不要在这里做，传给下一个组件
+      this.$router.replace({
         path: '/resultgeneral',
         query: this.queryInfo,
       })
+      // 页面标题要随着每次搜索的不同而改变
+      document.title = this.queryInfo.searchInput
     },
   },
 }

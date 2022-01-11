@@ -10,14 +10,24 @@
         class="card-mainContent"
         shadow="never"
         v-for="exp in queryInfo.searchResult"
-        :key="exp"
+        :key="exp._id"
       >
+        <!-- 经验标题 -->
         <el-link
           @click="showResultDetail"
           :underline="false"
           class="exp-title"
           >{{ exp._source.title }}</el-link
         >
+
+        <!-- 添加时间以及tag -->
+        <div class="exp-ts-and-tags">2022年1月11日20:14:35</div>
+
+        <!-- 经验背景 -->
+        <div class="exp-backgroud">{{ exp._source.background }}</div>
+
+        <!-- 阅读全文 -->
+        <div>阅读全文 〉</div>
       </el-card>
     </div>
     <div class="mainOthers">其他展示</div>
@@ -30,13 +40,21 @@ export default {
     return {
       queryInfo: {
         searchInput: this.$route.query.searchInput,
-        searchResult: this.$route.query.searchResult,
+        searchResult: [],
       },
     }
   },
-  mounted() {
-    // console.log(this.queryInfo)
+
+  watch: {
+    '$route.query.searchInput': {
+      handler(value) {
+        this.queryInfo.searchInput = value
+        this.Search()
+      },
+      immediate: true,
+    },
   },
+
   methods: {
     // 查看经验的细节
     showResultDetail() {
@@ -44,6 +62,12 @@ export default {
         path: '/resultdetail',
         // query: this.queryInfo,
       })
+    },
+    async Search() {
+      const { data: res } = await this.$http.get('search')
+      const exp_array = res['data']['hits']['hits']
+      console.log(exp_array)
+      this.queryInfo.searchResult = exp_array
     },
   },
 }
@@ -102,5 +126,28 @@ export default {
 .exp-title {
   color: #202020 !important;
   font: 19.2px sans-serif;
+}
+
+// 经验时间和tags
+.exp-ts-and-tags {
+  color: #999999;
+  font: 12px sans-serif;
+  position: relative;
+  padding-right: 60px;
+  min-height: 30px;
+  margin: 0.5rem 0;
+  line-height: 1.5rem;
+}
+
+// 经验背景
+.exp-backgroud {
+  color: #999999;
+  font: 18px sans-serif;
+  height: 60px;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 </style>

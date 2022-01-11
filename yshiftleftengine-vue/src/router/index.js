@@ -11,6 +11,11 @@ VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch((err) => err)
 }
 
+const originalReplace = VueRouter.prototype.replace
+VueRouter.prototype.replace = function push(location) {
+  return originalReplace.call(this, location).catch((err) => err)
+}
+
 Vue.use(VueRouter)
 
 const routes = [

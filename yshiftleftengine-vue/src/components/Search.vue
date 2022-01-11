@@ -46,12 +46,7 @@ export default {
         this.$router.go(0)
         return
       }
-
-      // const { data: res } = await this.$http.get('search', {
-      //   params: this.queryInfo,
-      // })
-
-      // console.log(res)
+      // 点击了搜索，切换到结果展示的组件，并且把搜索的内容传递过去
       this.$router.push({
         path: '/results',
         query: this.queryInfo,
