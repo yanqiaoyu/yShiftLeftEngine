@@ -27,7 +27,11 @@
         <div class="exp-backgroud">{{ exp._source.background }}</div>
 
         <!-- 阅读全文 -->
-        <div>阅读全文 〉</div>
+        <div>
+          <el-link @click="showResultDetail" :underline="false"
+            >阅读全文 〉</el-link
+          >
+        </div>
       </el-card>
     </div>
     <div class="mainOthers">其他展示</div>
