@@ -39,8 +39,6 @@ export default {
     }
   },
   created() {
-    //  创建时就改好页面的标题，参考百度，取搜索内容作为标题
-    document.title = this.$route.query.searchInput + '的搜索结果'
     this.Search()
   },
   methods: {
@@ -52,7 +50,7 @@ export default {
         query: this.queryInfo,
       })
       // 页面标题要随着每次搜索的不同而改变
-      document.title = this.queryInfo.searchInput
+      document.title = this.queryInfo.searchInput + '的搜索结果'
     },
   },
 }

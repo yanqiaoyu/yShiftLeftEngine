@@ -3,7 +3,8 @@
     <div class="mainContent">
       <div class="resultStats">
         找到 {{ queryInfo.searchResult.length }} 条关于
-        {{ queryInfo.searchInput }} 的结果 （用时 0.54 秒）
+        {{ queryInfo.searchInput }} 的结果 (用时
+        {{ queryInfo.searchTookTime / 1000 }} 秒)
       </div>
 
       <el-card
@@ -45,6 +46,7 @@ export default {
       queryInfo: {
         searchInput: this.$route.query.searchInput,
         searchResult: [],
+        searchTookTime: 0,
       },
     }
   },
@@ -70,7 +72,10 @@ export default {
     async Search() {
       const { data: res } = await this.$http.get('search')
       const exp_array = res['data']['hits']['hits']
-      console.log(exp_array)
+      // console.log(res['data'])
+      // ES搜索的毫秒数
+      this.queryInfo.searchTookTime = res['data']['took']
+      // ES搜索的实际结果
       this.queryInfo.searchResult = exp_array
     },
   },
