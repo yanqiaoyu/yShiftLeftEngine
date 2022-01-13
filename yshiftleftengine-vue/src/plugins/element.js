@@ -11,7 +11,9 @@ import {
   Empty,
   Card,
   Divider,
-  Link
+  Link,
+  Tag,
+  PageHeader
 } from 'element-ui'
 
 Vue.use(Button)
@@ -26,3 +28,5 @@ Vue.use(Empty)
 Vue.use(Card)
 Vue.use(Divider)
 Vue.use(Link)
+Vue.use(Tag)
+Vue.use(PageHeader)

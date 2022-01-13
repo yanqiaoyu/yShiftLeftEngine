@@ -18,20 +18,28 @@
           @click="showResultDetail"
           :underline="false"
           class="exp-title"
-          >{{ exp._source.title }}</el-link
-        >
+        >{{ exp._source.title }}</el-link>
 
         <!-- 添加时间以及tag -->
-        <div class="exp-ts-and-tags">2022年1月11日20:14:35</div>
+        <div class="exp-ts-and-tags">
+          2022年1月11日20:14:35
+          <div class="tags">
+            <el-tag
+              v-for="tag in exp._source.tags"
+              :key="tag"
+              type="info"
+              size="mini"
+              style="margin-left: 10px;"
+            >{{ tag }}</el-tag>
+          </div>
+        </div>
 
         <!-- 经验背景 -->
         <div class="exp-backgroud">{{ exp._source.background }}</div>
 
         <!-- 阅读全文 -->
         <div>
-          <el-link @click="showResultDetail" :underline="false"
-            >阅读全文 〉</el-link
-          >
+          <el-link @click="showResultDetail" :underline="false">阅读全文 〉</el-link>
         </div>
       </el-card>
     </div>
@@ -72,7 +80,7 @@ export default {
     async Search() {
       const { data: res } = await this.$http.get('search')
       const exp_array = res['data']['hits']['hits']
-      // console.log(res['data'])
+      console.log(res['data'])
       // ES搜索的毫秒数
       this.queryInfo.searchTookTime = res['data']['took']
       // ES搜索的实际结果
@@ -158,5 +166,10 @@ export default {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
+}
+
+//
+.tags {
+  display: inline-flex;
 }
 </style>
