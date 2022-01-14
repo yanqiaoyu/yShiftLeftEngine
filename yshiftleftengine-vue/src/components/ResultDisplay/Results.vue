@@ -2,11 +2,7 @@
   <el-container class="resultsDisplay">
     <el-header>
       <!-- 猫猫图 -->
-      <el-avatar
-        :size="80"
-        fit="fit"
-        :src="require('../../assets/cat.png')"
-      ></el-avatar>
+      <el-avatar :size="80" fit="fit" :src="require('../../assets/cat.png')"></el-avatar>
       <el-input
         placeholder="请输入搜索内容"
         v-model="queryInfo.searchInput"
@@ -14,11 +10,7 @@
         @keyup.enter.native="Search"
         clearable
       >
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="Search"
-        ></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="Search"></el-button>
       </el-input>
     </el-header>
     <el-main>
@@ -44,6 +36,10 @@ export default {
   methods: {
     // 搜索经验
     async Search() {
+      // 如果这个页面中，如果搜索框中没有填写搜索内容，且发起了搜索请求，那么参考谷歌的做法，不作响应
+      if (this.queryInfo.searchInput.trim() == '') {
+        return
+      }
       // 搜索的实际请求不要在这里做，传给下一个组件
       this.$router.replace({
         path: '/resultgeneral',
