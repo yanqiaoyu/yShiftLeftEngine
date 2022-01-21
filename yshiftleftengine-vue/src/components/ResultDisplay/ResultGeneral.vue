@@ -42,6 +42,8 @@
           <el-link @click="showResultDetail" :underline="false">阅读全文 〉</el-link>
         </div>
       </el-card>
+
+      <div v-for="o in 40" :key="o" class="text item">{{'列表内容 ' + o }}</div>
     </div>
     <div class="mainOthers">其他展示</div>
   </div>

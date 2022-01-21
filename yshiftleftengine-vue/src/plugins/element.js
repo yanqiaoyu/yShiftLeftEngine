@@ -13,7 +13,8 @@ import {
   Divider,
   Link,
   Tag,
-  PageHeader
+  PageHeader,
+  Scrollbar
 } from 'element-ui'
 
 Vue.use(Button)
@@ -30,3 +31,4 @@ Vue.use(Divider)
 Vue.use(Link)
 Vue.use(Tag)
 Vue.use(PageHeader)
+Vue.use(Scrollbar)

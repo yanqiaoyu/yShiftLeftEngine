@@ -13,11 +13,13 @@
         <el-button slot="append" icon="el-icon-search" @click="Search"></el-button>
       </el-input>
     </el-header>
-    <el-main>
-      <!-- 路由占位符, 有了这个占位符,通过路由匹配到的组件才会在这里展示 -->
-      <!-- 这里对应着2个组件，一个是所有搜索结果的展示，一个是单个搜索结果细节的展示 -->
-      <router-view></router-view>
-    </el-main>
+    <el-scrollbar style="height:100%">
+      <el-main>
+        <!-- 路由占位符, 有了这个占位符,通过路由匹配到的组件才会在这里展示 -->
+        <!-- 这里对应着2个组件，一个是所有搜索结果的展示，一个是单个搜索结果细节的展示 -->
+        <router-view></router-view>
+      </el-main>
+    </el-scrollbar>
   </el-container>
 </template>
 
