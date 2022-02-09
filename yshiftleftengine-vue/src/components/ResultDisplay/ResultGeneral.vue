@@ -15,7 +15,7 @@
       >
         <!-- 经验标题 -->
         <el-link
-          @click="showResultDetail"
+          @click="showResultDetail(exp)"
           :underline="false"
           class="exp-title"
         >{{ exp._source.title }}</el-link>
@@ -43,7 +43,7 @@
         </div>
       </el-card>
 
-      <div v-for="o in 40" :key="o" class="text item">{{'列表内容 ' + o }}</div>
+      <div v-for="o in 40" :key="o" class="text item">{{ '列表内容 ' + o }}</div>
     </div>
     <div class="mainOthers">其他展示</div>
   </div>
@@ -73,16 +73,16 @@ export default {
 
   methods: {
     // 查看经验的细节
-    showResultDetail() {
+    showResultDetail(exp) {
       this.$router.push({
         path: '/resultdetail',
-        // query: this.queryInfo,
+        query: exp,
       })
     },
     async Search() {
       const { data: res } = await this.$http.get('search')
       const exp_array = res['data']['hits']['hits']
-      console.log(res['data'])
+      // console.log(res['data'])
       // ES搜索的毫秒数
       this.queryInfo.searchTookTime = res['data']['took']
       // ES搜索的实际结果
