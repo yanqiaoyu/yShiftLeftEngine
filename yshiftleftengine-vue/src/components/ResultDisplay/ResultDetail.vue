@@ -1,9 +1,10 @@
 <template>
   <div class="center">
+    <el-page-header @back="goBack"></el-page-header>
     <div class="header">
-      <!-- 经验标题 -->
+      <!-- 标题 -->
       <h1 class="title">{{ exp._source.title }}</h1>
-      <!-- 经验的tags -->
+      <!-- tags -->
       <div class="tags">
         <el-tag
           v-for="tag in exp._source.tags"
@@ -14,11 +15,25 @@
         >{{ tag }}</el-tag>
       </div>
       <!-- 作者，时间，阅读量 -->
-      <div class="others">123</div>
+      <div class="authorAndTimeAndClicks">
+        <div>作者: yanqiaoyu</div>
+        <el-divider direction="vertical"></el-divider>
+        <div>2020-02-01 12:00:00</div>
+        <el-divider direction="vertical"></el-divider>
+        <div>点击量: 12</div>
+      </div>
     </div>
-    <div>{{ exp._source.background }}</div>
-    <div>{{ exp._source.rootCause }}</div>
-    <div>{{ exp._source.testSuggestion }}</div>
+
+    <div class="content">
+      <h3>问题背景</h3>
+      <div>{{ exp._source.background }}</div>
+
+      <h3>根本原因</h3>
+      <div>{{ exp._source.rootCause }}</div>
+
+      <h3>测试建议</h3>
+      <div>{{ exp._source.testSuggestion }}</div>
+    </div>
   </div>
 </template>
 
@@ -57,5 +72,21 @@ export default {
 
 .tags {
   text-align: center;
+}
+
+.authorAndTimeAndClicks {
+  display: flex;
+  justify-content: center;
+  font: 14px sans-serif;
+  color: #999999;
+  margin: 20px 0;
+}
+
+.el-divider {
+  padding-top: 5px;
+}
+
+.content {
+  width: 740px;
 }
 </style>

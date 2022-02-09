@@ -39,7 +39,7 @@
 
         <!-- 阅读全文 -->
         <div>
-          <el-link @click="showResultDetail" :underline="false">阅读全文 〉</el-link>
+          <el-link @click="showResultDetail(exp)" :underline="false">阅读全文 〉</el-link>
         </div>
       </el-card>
 
