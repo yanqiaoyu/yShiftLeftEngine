@@ -1,3 +1,5 @@
+from common.read_yaml import readYamlHandler
+from dao.elasticsearch.elasticsearch_base import ElasticSearchBase
 from routers import search
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
@@ -7,7 +9,6 @@ import os
 # 把根目录添加进系统目录
 sys.path.append(os.pardir)
 
-from common.read_yaml import readYamlHandler
 
 app = FastAPI()
 '''
@@ -40,7 +41,21 @@ def initAPIService():
                 debug=True)
 
 
+def only4Test():
+    '''
+    仅用于测试
+    '''
+    # print("beginning test")
+    # from dao.elasticsearch import elasticsearch_base
+    # a = ElasticSearchBase()
+    # a.DeleteIndex("api")
+
+    a = ElasticSearchBase()
+    a.ReIndex()
+
+
 def main():
+    only4Test()
     initAPIService()
 
 
