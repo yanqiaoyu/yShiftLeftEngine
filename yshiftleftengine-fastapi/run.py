@@ -50,13 +50,16 @@ def only4Test():
     # a = ElasticSearchBase()
     # a.DeleteIndex("api")
 
-    a = ElasticSearchBase()
-    a.ReIndex()
+    from dao.elasticsearch.elasticsearch_base import InitElasticSearch
+    InitElasticSearch()
+
+    # a = ElasticSearchBase()
+    # a.ReIndex()
 
 
 def main():
     only4Test()
-    initAPIService()
+    # initAPIService()
 
 
 if __name__ == '__main__':

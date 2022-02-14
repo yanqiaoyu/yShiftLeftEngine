@@ -1,5 +1,4 @@
 from elasticsearch import Elasticsearch
-from elasticsearch import helpers
 from common.read_yaml import readYamlHandler
 
 
@@ -21,7 +20,6 @@ class ES():
 
 
 esHandler = ES.connectES()
-esHelpers = helpers
 
 if __name__ == "__main__":
     es = ES.connectES()

@@ -1,6 +1,7 @@
 elasticsearch:
   esAddress: 103.44.241.227
   esPort: 9200
+  esIndexName: experience
 apiService:
   bindAddress: 0.0.0.0
   bindPort: 80
