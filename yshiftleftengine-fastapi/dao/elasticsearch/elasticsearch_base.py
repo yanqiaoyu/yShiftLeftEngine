@@ -1,46 +1,93 @@
 from attr import fields
 from numpy import source
-from sqlalchemy import false
+from sqlalchemy import false, true
 from common.es import esHandler
 from common.read_yaml import readYamlHandler
 
 experienceIndexMappings = {
     "mappings": {
         # 禁止动态新增字段
-        "dynamic": "strict"
-    },
-    # 具体的字段写在这里面
-    "properties": {
-        # 作者
-        "author": {
-            "type": "text",
-            # 作者这个字段不建立索引
-            "index": false
-        },
-        # 点击量
-        "clicks": {
-            "type": "long",
-            # 点击量这个字段不建立索引
-            "index": false
-        },
-        # 参考链接
-        "reference": {
-            "type": "text",
-            # 参考链接这个字段不建立索引
-            "index": false
-        },
-        # 添加时间
-        "createTime": {
-            "type": "date",
-            "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
-            # 添加时间这个字段不建立索引
-            "index": false,
-        },
-        # 修改时间
-        "updateTime": {
+        "dynamic": "strict",
 
+        # 具体的字段写在这里面
+        "properties": {
+            # 作者
+            "author": {
+                "type": "text",
+                # 作者这个字段不建立索引
+                "index": False
+            },
+            # 点击量
+            "clicks": {
+                "type": "long",
+                # 点击量这个字段不建立索引
+                "index": False
+            },
+            # 参考链接
+            "reference": {
+                "type": "text",
+                # 参考链接这个字段不建立索引
+                "index": False
+            },
+            # 添加时间
+            "createTime": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
+                # 添加时间这个字段不建立索引
+                "index": False,
+            },
+            # 修改时间
+            "updateTime": {
+                "type": "date",
+                "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
+                # 修改时间这个字段不建立索引
+                "index": False,
+                # 修改时间这个字段不进行聚合排序以及脚本操作
+                "doc_values": False
+            },
+            # tags
+            "tags": {
+                "type": "keyword",
+                # 需要聚合，且数据量较大，但唯一值较少
+                "eager_global_ordinals": True,
+            },
+            # 问题背景
+            "background": {
+                "type": "text",
+                # 问题背景不需要聚合排序
+                "doc_values": False,
+                # 内容为大字段，单独存储，用于查询返回
+                "store": True
+            },
+            # 问题根因
+            "rootCause": {
+                "type": "text",
+                # 问题根因不需要聚合排序
+                "doc_values": False,
+                # 内容为大字段，单独存储，用于查询返回
+                "store": True
+            },
+            # 测试建议
+            "testSuggestion": {
+                "type": "text",
+                # 测试建议不需要聚合排序
+                "doc_values": False,
+                # 内容为大字段，单独存储，用于查询返回
+                "store": True
+            },
+            # 标题
+            "title": {
+                "type": "text",
+                "analyzer": "ik_max_word",
+                # 检索的分词没必要细粒度，提升效率
+                "search_analyzer": "ik_smart",
+                # 对 标题 不需要聚合、排序
+                "doc_values": False,
+                # 提升该字段的权重
+                "boost": 5
+            }
         }
-    }
+    },
 }
 
 
@@ -104,4 +151,5 @@ def InitElasticSearch():
         pass
     else:
         # 不存在则新建
-        pass
+        esHandler.indices.create(
+            index=esIndexName, body=experienceIndexMappings)
