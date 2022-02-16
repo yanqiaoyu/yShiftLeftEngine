@@ -14,11 +14,11 @@
         :key="exp._id"
       >
         <!-- 经验标题 -->
-        <el-link
-          @click="showResultDetail(exp)"
-          :underline="false"
-          class="exp-title"
-        >{{ exp._source.title }}</el-link>
+        <el-link @click="showResultDetail(exp)" :underline="false" class="exp-title">
+          {{ exp._source.title }}
+          <!-- eslint-disable-next-line -->
+          <span v-html="showData(message)"></span>
+        </el-link>
 
         <!-- 添加时间以及tag -->
         <div class="exp-ts-and-tags">
@@ -79,6 +79,7 @@ export default {
         query: exp,
       })
     },
+
     async Search() {
       const { data: res } = await this.$http.get('search')
       const exp_array = res['data']['hits']['hits']
@@ -88,6 +89,20 @@ export default {
       // ES搜索的实际结果
       this.queryInfo.searchResult = exp_array
     },
+
+        showData(val) {
+      val = val + '';
+      if (this.checkPara(val,this.listQuery.queryMessage)||this.checkPara(val,this.listQuery.queryMessage2)
+        ||this.checkPara(val,this.listQuery.queryMessage3)) {
+        //如果搜索结果记录包含关键字中的任何一个，那么修改样式
+        return val.replace(this.listQuery.queryMessage'<font color="#409EFF">' + this.listQuery.prodcd + '</font>')
+          .replace(this.listQuery.queryMessage2, '<font color="#409EFF">' + this.listQuery.queryMessage3 + '</font>')
+         
+      } else {
+        return val //不做任何修改
+      }
+    },
+
   },
 }
 </script>
