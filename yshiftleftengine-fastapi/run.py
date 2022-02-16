@@ -1,5 +1,4 @@
 from common.read_yaml import readYamlHandler
-from dao.elasticsearch.elasticsearch_base import ElasticSearchBase
 from routers import search
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
@@ -50,16 +49,24 @@ def only4Test():
     # a = ElasticSearchBase()
     # a.DeleteIndex("api")
 
-    from dao.elasticsearch.elasticsearch_base import InitElasticSearch
-    InitElasticSearch()
+    # from dao.elasticsearch.elasticsearch_base import InitElasticSearch
+    # InitElasticSearch()
+    from dao.elasticsearch.elasticsearch_base import ElasticSearchBase
+    a = ElasticSearchBase()
+    # a.ReIndex("hello", "experience")
+    body = {
+        'doc': {
+            'title': '2022-02-16',
+            'createTime': '2022-02-16'
+        }
 
-    # a = ElasticSearchBase()
-    # a.ReIndex()
+    }
+    a.UpdateDocs(index="experience", id="SCCgcn0BLMCW-yuGV_5H", body=body)
 
 
 def main():
-    only4Test()
-    # initAPIService()
+    # only4Test()
+    initAPIService()
 
 
 if __name__ == '__main__':

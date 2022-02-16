@@ -1,6 +1,3 @@
-from attr import fields
-from numpy import source
-from sqlalchemy import false, true
 from common.es import esHandler
 from common.read_yaml import readYamlHandler
 
@@ -122,25 +119,33 @@ class ElasticSearchBase:
         '''
         esHandler.indices.delete(index=index)
 
-    def ReIndex(self):
+    def ReIndex(self, sourceIndex, destIndex):
         '''
-        迁移文档
+        迁移文档,需要保证source和dest都存在
         '''
 
         body = {
             "source": {
-                "index": "my-index-000001"
+                "index": sourceIndex
             },
             "dest": {
-                "index": "my-new-index-000001"
+                "index": destIndex
             }
         }
         esHandler.reindex(body=body)
+
+    def UpdateDocs(self, index, id, body):
+        '''
+        更新文档:你需要指定 index id 和 body
+        '''
+        result = esHandler.update(index=index, id=id, body=body)
+        print(result['result'])
 
 
 def InitElasticSearch():
     '''
     初始化Elasticsearch数据库
+    需要ES中存在IK分词器的插件,否则报错
     '''
 
     esIndexName = readYamlHandler.read_conf()['elasticsearch']['esIndexName']

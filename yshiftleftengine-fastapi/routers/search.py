@@ -1,13 +1,14 @@
 from fastapi import APIRouter
-
-import dao
+from common.read_yaml import readYamlHandler
+from dao.elasticsearch.elasticsearch_base import ElasticSearchBase
 
 searchRouter = APIRouter()
+esIndexName = readYamlHandler.read_conf()['elasticsearch']['esIndexName']
+es = ElasticSearchBase()
 
 
 # 查询经验
 @searchRouter.get("/search")
 async def GetSearchResult():
-    # dao.ElasticSearchBase.InsertNewDoc(index='hello', doc=mappings2)
-    result = dao.ElasticSearchBase.GetAllDocs('hello')
+    result = es.GetAllDocs(esIndexName)
     return {"data": result, "meta": {}}
