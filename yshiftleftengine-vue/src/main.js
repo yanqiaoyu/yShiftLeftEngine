@@ -13,7 +13,7 @@ if (process.env.NODE_ENV == 'production') {
   let host = window.location.host //主机
   axios.defaults.baseURL = 'http://' + host + '/api/auth/'
 } else {
-  axios.defaults.baseURL = 'http://localhost'
+  axios.defaults.baseURL = 'http://localhost/dashboard'
 }
 
 Vue.config.productionTip = false

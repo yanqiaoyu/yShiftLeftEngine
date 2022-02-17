@@ -107,6 +107,12 @@ class ElasticSearchBase:
         '''
         return esHandler.search(index=indexName)
 
+    def GetDocsBySearchInput(self, index, body):
+        '''
+        根据查询名词
+        '''
+        return esHandler.search(index=index, body=body)
+
     def InsertNewDoc(self, index, doc):
         '''
         在指定的索引里面插入新的文档

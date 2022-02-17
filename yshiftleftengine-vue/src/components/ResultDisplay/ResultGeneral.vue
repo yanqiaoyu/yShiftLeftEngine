@@ -3,7 +3,7 @@
     <div class="mainContent">
       <div class="resultStats">
         找到 {{ queryInfo.searchResult.length }} 条关于
-        {{ queryInfo.searchInput }} 的结果 (用时
+        {{ queryInfo.searchInput }} 的经验 (用时
         {{ queryInfo.searchTookTime / 1000 }} 秒)
       </div>
 
@@ -15,9 +15,8 @@
       >
         <!-- 经验标题 -->
         <el-link @click="showResultDetail(exp)" :underline="false" class="exp-title">
-          {{ exp._source.title }}
           <!-- eslint-disable-next-line -->
-          <span v-html="showData(message)"></span>
+          <span v-html="showData(exp._source.title)"></span>
         </el-link>
 
         <!-- 添加时间以及tag -->
@@ -35,17 +34,24 @@
         </div>
 
         <!-- 经验背景 -->
-        <div class="exp-backgroud">{{ exp._source.background }}</div>
+        <div class="exp-backgroud">
+          <!-- {{ exp._source.background }} -->
+          <!-- eslint-disable-next-line -->
+          <span v-html="showData(exp._source.background)"></span>
+        </div>
 
         <!-- 阅读全文 -->
         <div>
           <el-link @click="showResultDetail(exp)" :underline="false">阅读全文 〉</el-link>
         </div>
       </el-card>
-
-      <div v-for="o in 40" :key="o" class="text item">{{ '列表内容 ' + o }}</div>
+      <el-empty
+        style="margin-top: 150px"
+        v-if="queryInfo.searchResult.length==0"
+        description="Ooops,暂无相关经验,尝试搜索其他关键字"
+      ></el-empty>
     </div>
-    <div class="mainOthers">其他展示</div>
+    <div class="mainOthers"></div>
   </div>
 </template>
 
@@ -81,7 +87,11 @@ export default {
     },
 
     async Search() {
-      const { data: res } = await this.$http.get('search')
+      const { data: res } = await this.$http.get('search', {
+        params: {
+          searchInput: this.queryInfo.searchInput,
+        },
+      })
       const exp_array = res['data']['hits']['hits']
       // console.log(res['data'])
       // ES搜索的毫秒数
@@ -89,20 +99,26 @@ export default {
       // ES搜索的实际结果
       this.queryInfo.searchResult = exp_array
     },
-
-        showData(val) {
-      val = val + '';
-      if (this.checkPara(val,this.listQuery.queryMessage)||this.checkPara(val,this.listQuery.queryMessage2)
-        ||this.checkPara(val,this.listQuery.queryMessage3)) {
-        //如果搜索结果记录包含关键字中的任何一个，那么修改样式
-        return val.replace(this.listQuery.queryMessage'<font color="#409EFF">' + this.listQuery.prodcd + '</font>')
-          .replace(this.listQuery.queryMessage2, '<font color="#409EFF">' + this.listQuery.queryMessage3 + '</font>')
-         
+    // 如果标题或者背景命中了搜索的关键字,则修改样式
+    showData(val) {
+      val = val + ''
+      if (this.checkPara(val, this.queryInfo.searchInput)) {
+        return val.replace(
+          this.queryInfo.searchInput,
+          '<font color="#409EFF">' + this.queryInfo.searchInput + '</font>'
+        )
       } else {
-        return val //不做任何修改
+        return val
       }
     },
-
+    // 判断搜索记录是否包含某个关键字
+    checkPara(val, para) {
+      if (val.indexOf(para) !== -1 && para !== '') {
+        return true
+      } else {
+        return false
+      }
+    },
   },
 }
 </script>
