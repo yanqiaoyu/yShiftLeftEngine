@@ -10,7 +10,7 @@
         {{ queryInfo.searchInput }} 的经验 (用时
         {{ queryInfo.searchTookTime / 1000 }} 秒)
       </div>
-      <!-- 没有搜索内容,展示全部搜索结果 -->
+      <!-- 没有搜索内容,展示全部结果 -->
       <div v-else class="resultStats">
         展示所有经验 ( 用时
         {{ queryInfo.searchTookTime / 1000 }} 秒, 共 {{ queryInfo.searchResult.length }} 条 )
