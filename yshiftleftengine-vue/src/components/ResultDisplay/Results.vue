@@ -2,7 +2,12 @@
   <el-container class="resultsDisplay">
     <el-header>
       <!-- 猫猫图 -->
-      <el-avatar :size="80" fit="fit" :src="require('../../assets/cat.png')"></el-avatar>
+      <el-avatar
+        :size="80"
+        fit="fit"
+        :src="require('../../assets/cat.png')"
+        @click.native="return2Index"
+      ></el-avatar>
       <el-input
         placeholder="请输入搜索内容"
         v-model="queryInfo.searchInput"
@@ -49,6 +54,10 @@ export default {
       })
       // 页面标题要随着每次搜索的不同而改变
       document.title = this.queryInfo.searchInput + '的搜索结果'
+    },
+    return2Index() {
+      console.log('back to index')
+      this.$router.replace('/')
     },
   },
 }
