@@ -17,7 +17,7 @@
       </div>
       <div class="search-Button">
         <el-button round class="my-Button" @click="Search">开始搜索</el-button>
-        <el-button round class="my-Button" @click="RandomSearch">随便看看</el-button>
+        <el-button round class="my-Button" @click="SearchAll">全部展示</el-button>
       </div>
     </div>
   </div>
@@ -35,10 +35,9 @@ export default {
   methods: {
     // 搜索经验
     async Search() {
-      // 如果没有填写搜索内容，参考百度的做法刷新页面
+      // 如果没有填写搜索内容
       if (this.queryInfo.searchInput.trim() == '') {
-        this.$router.go(0)
-        return
+        this.SearchAll()
       }
       // 点击了搜索，切换到结果展示的组件，并且把搜索的内容传递过去
       this.$router.push({
@@ -46,8 +45,13 @@ export default {
         query: this.queryInfo,
       })
     },
-    // 随机看一条经验
-    async RandomSearch() {},
+    // 展示所有的经验
+    async SearchAll() {
+      console.log('进入Search.vue SearchAll函数')
+      this.$router.push({
+        path: '/results',
+      })
+    },
   },
 }
 </script>

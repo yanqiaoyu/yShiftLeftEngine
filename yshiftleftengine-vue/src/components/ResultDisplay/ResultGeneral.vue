@@ -1,10 +1,19 @@
 <template>
   <div class="divContainsMainAndOthers">
     <div class="mainContent">
-      <div class="resultStats">
+      <!-- 有搜索内容,展示搜索结果 -->
+      <div
+        v-if="this.$route.query.searchInput != null && this.$route.query.searchInput != ''"
+        class="resultStats"
+      >
         找到 {{ queryInfo.searchResult.length }} 条关于
         {{ queryInfo.searchInput }} 的经验 (用时
         {{ queryInfo.searchTookTime / 1000 }} 秒)
+      </div>
+      <!-- 没有搜索内容,展示全部搜索结果 -->
+      <div v-else class="resultStats">
+        展示所有经验 ( 用时
+        {{ queryInfo.searchTookTime / 1000 }} 秒, 共 {{ queryInfo.searchResult.length }} 条 )
       </div>
 
       <el-card
@@ -70,8 +79,13 @@ export default {
   watch: {
     '$route.query.searchInput': {
       handler(value) {
-        this.queryInfo.searchInput = value
-        this.Search()
+        if (value != null) {
+          this.queryInfo.searchInput = value
+          this.Search()
+        } else {
+          console.log('搜索所有')
+          this.SearchAll()
+        }
       },
       immediate: true,
     },
@@ -85,7 +99,15 @@ export default {
         query: exp,
       })
     },
-
+    async SearchAll() {
+      const { data: res } = await this.$http.get('search')
+      const exp_array = res['data']['hits']['hits']
+      // console.log(res['data'])
+      // ES搜索的毫秒数
+      this.queryInfo.searchTookTime = res['data']['took']
+      // ES搜索的实际结果
+      this.queryInfo.searchResult = exp_array
+    },
     async Search() {
       const { data: res } = await this.$http.get('search', {
         params: {
