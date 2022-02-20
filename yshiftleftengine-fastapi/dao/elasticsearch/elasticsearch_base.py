@@ -131,7 +131,7 @@ class ElasticSearchBase:
         '''
         查询特定索引下面所有的文档
         '''
-        return esHandler.search(index=indexName)
+        return esHandler.search(index=indexName, size=10000)
 
     def GetDocsBySearchInput(self, index, body):
         '''
