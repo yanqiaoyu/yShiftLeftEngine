@@ -1,10 +1,11 @@
 from common.read_yaml import readYamlHandler
-from routers import search
+from routers import search, add
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 import uvicorn
 import sys
 import os
+from dao.elasticsearch.elasticsearch_base import InitElasticSearch
 # 把根目录添加进系统目录
 sys.path.append(os.pardir)
 
@@ -27,6 +28,7 @@ app.add_middleware(
 )
 
 app.include_router(search.searchRouter)
+app.include_router(add.addRouter)
 
 
 # 初始化api服务
@@ -40,6 +42,11 @@ def initAPIService():
                 debug=True)
 
 
+# 初始化es数据库服务
+def initElasticSearchServices():
+    InitElasticSearch()
+
+
 def only4Test():
     '''
     仅用于测试
@@ -48,9 +55,6 @@ def only4Test():
     # from dao.elasticsearch import elasticsearch_base
     # a = ElasticSearchBase()
     # a.DeleteIndex("api")
-
-    # from dao.elasticsearch.elasticsearch_base import InitElasticSearch
-    # InitElasticSearch()
     from dao.elasticsearch.elasticsearch_base import ElasticSearchBase
     a = ElasticSearchBase()
     # a.ReIndex("hello", "experience")
@@ -59,13 +63,13 @@ def only4Test():
             'title': '2022-02-16',
             'createTime': '2022-02-16'
         }
-
     }
     a.UpdateDocs(index="experience", id="SCCgcn0BLMCW-yuGV_5H", body=body)
 
 
 def main():
     # only4Test()
+    initElasticSearchServices()
     initAPIService()
 
 

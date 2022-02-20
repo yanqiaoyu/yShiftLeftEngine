@@ -7,9 +7,11 @@ esIndexName = readYamlHandler.read_conf()['elasticsearch']['esIndexName']
 es = ElasticSearchBase()
 
 
-# 查询经验
 @searchRouter.get("/dashboard/search")
 async def GetSearchResult(searchInput: str):
+    '''
+    在标题和背景中,搜素关键字
+    '''
     # print("SearchInput: ", searchInput)
 
     body = {

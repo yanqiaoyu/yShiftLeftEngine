@@ -29,14 +29,14 @@ experienceIndexMappings = {
             # 添加时间
             "createTime": {
                 "type": "date",
-                "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
+                # "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
                 # 添加时间这个字段不建立索引
                 "index": False,
             },
             # 修改时间
             "updateTime": {
                 "type": "date",
-                "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
+                # "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
                 # 修改时间这个字段不建立索引
                 "index": False,
                 # 修改时间这个字段不进行聚合排序以及脚本操作
@@ -44,15 +44,17 @@ experienceIndexMappings = {
             },
             # tags
             "tags": {
-                "type": "keyword",
-                # 需要聚合，且数据量较大，但唯一值较少
-                "eager_global_ordinals": True,
+                "type": "text",
+                "analyzer": "ik_max_word",
             },
             # 问题背景
             "background": {
                 "type": "text",
                 # 问题背景不需要聚合排序
                 "doc_values": False,
+                "analyzer": "ik_max_word",
+                # 检索的分词没必要细粒度，提升效率
+                "search_analyzer": "whitespace",
                 # 内容为大字段，单独存储，用于查询返回
                 "store": True
             },
@@ -77,7 +79,7 @@ experienceIndexMappings = {
                 "type": "text",
                 "analyzer": "ik_max_word",
                 # 检索的分词没必要细粒度，提升效率
-                "search_analyzer": "ik_smart",
+                "search_analyzer": "whitespace",
                 # 对 标题 不需要聚合、排序
                 "doc_values": False,
                 # 提升该字段的权重
@@ -85,6 +87,30 @@ experienceIndexMappings = {
             }
         }
     },
+}
+
+expPipelineWhenCreated = {
+    "description": "my exp pipeline when created",
+    "processors": [
+        {
+            "script": {
+                "lang": "painless",
+                "source": """DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX"); df.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai")); Date date = new Date(); ctx.createTime = df.format(date);"""
+            }
+        },
+        {
+            "script": {
+                "lang": "painless",
+                "source": """DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX"); df.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai")); Date date = new Date(); ctx.updateTime = df.format(date);"""
+            }
+        },
+        {
+            "set": {
+                "field": "clicks",
+                "value": 0
+            }
+        }
+    ]
 }
 
 
@@ -113,11 +139,11 @@ class ElasticSearchBase:
         '''
         return esHandler.search(index=index, body=body)
 
-    def InsertNewDoc(self, index, doc):
+    def InsertNewDoc(self, index, doc, pipeline=None):
         '''
         在指定的索引里面插入新的文档
         '''
-        return esHandler.index(index=index, document=doc)
+        return esHandler.index(index=index, document=doc, pipeline=pipeline)
 
     def DeleteIndex(self, index):
         '''
@@ -151,10 +177,13 @@ class ElasticSearchBase:
 def InitElasticSearch():
     '''
     初始化Elasticsearch数据库
-    需要ES中存在IK分词器的插件,否则报错
+    1. 新建索引 需要ES中存在IK分词器的插件,否则建索引报错
+    2. 新建pipeline 
     '''
 
     esIndexName = readYamlHandler.read_conf()['elasticsearch']['esIndexName']
+    esExpPipelineName = readYamlHandler.read_conf(
+    )['elasticsearch']['esExpPipelineName']
 
     # 判断索引存不存在
     if esHandler.indices.exists(index=esIndexName):
@@ -164,3 +193,6 @@ def InitElasticSearch():
         # 不存在则新建
         esHandler.indices.create(
             index=esIndexName, body=experienceIndexMappings)
+
+    esHandler.ingest.put_pipeline(
+        id=esExpPipelineName, body=expPipelineWhenCreated)
