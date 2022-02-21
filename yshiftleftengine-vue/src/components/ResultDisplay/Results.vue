@@ -44,13 +44,10 @@ export default {
     // 搜索经验
     async Search() {
       // 搜索的实际请求不要在这里做，传给下一个组件
-      console.log('进入Results.vue Search函数')
-      console.log('当前searchInput是:', this.queryInfo.searchInput)
       if (
         this.queryInfo.searchInput != null &&
         this.queryInfo.searchInput != ''
       ) {
-        console.log('部分搜索结果')
         this.$router.replace({
           path: '/resultgeneral',
           query: this.queryInfo,
@@ -58,7 +55,6 @@ export default {
         // 页面标题要随着每次搜索的不同而改变
         document.title = this.queryInfo.searchInput + '的搜索结果'
       } else {
-        console.log('所有搜索结果')
         this.$router.replace({
           path: '/resultgeneral',
         })

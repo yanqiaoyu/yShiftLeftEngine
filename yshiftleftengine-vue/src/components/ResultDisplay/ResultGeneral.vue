@@ -1,6 +1,7 @@
 <template>
   <div class="divContainsMainAndOthers">
     <div class="mainContent">
+      <el-backtop></el-backtop>
       <!-- 有搜索内容,展示搜索结果 -->
       <div
         v-if="this.$route.query.searchInput != null && this.$route.query.searchInput != ''"
@@ -30,7 +31,7 @@
 
         <!-- 添加时间以及tag -->
         <div class="exp-ts-and-tags">
-          2022年1月11日20:14:35
+          {{ $timeTreatment.formatDate(exp._source.createTime) }}
           <div class="tags">
             <el-tag
               v-for="tag in exp._source.tags"
@@ -44,9 +45,8 @@
 
         <!-- 经验背景 -->
         <div class="exp-backgroud">
-          <!-- {{ exp._source.background }} -->
           <!-- eslint-disable-next-line -->
-          <span v-html="showData(exp._source.background)"></span>
+          <span class="exp-backgroud" v-html="showData(exp._source.background)"></span>
         </div>
 
         <!-- 阅读全文 -->
@@ -57,7 +57,7 @@
       <el-empty
         style="margin-top: 150px"
         v-if="queryInfo.searchResult.length==0"
-        description="Ooops,暂无相关经验,尝试搜索其他关键字"
+        description="Ooops,暂无相关经验,尝试搜索其他关键字,或查看所有经验"
       ></el-empty>
     </div>
     <div class="mainOthers"></div>
@@ -83,13 +83,13 @@ export default {
           this.queryInfo.searchInput = value
           this.Search()
         } else {
-          console.log('搜索所有')
           this.SearchAll()
         }
       },
       immediate: true,
     },
   },
+  created() {},
 
   methods: {
     // 查看经验的细节
@@ -102,7 +102,7 @@ export default {
     async SearchAll() {
       const { data: res } = await this.$http.get('search')
       const exp_array = res['data']['hits']['hits']
-      // console.log(res['data'])
+      console.log(res['data'])
       // ES搜索的毫秒数
       this.queryInfo.searchTookTime = res['data']['took']
       // ES搜索的实际结果
@@ -121,7 +121,7 @@ export default {
       // ES搜索的实际结果
       this.queryInfo.searchResult = exp_array
     },
-    // 如果标题或者背景命中了搜索的关键字,则修改样式
+    // 高亮功能:如果标题或者背景命中了搜索的关键字,则修改样式
     showData(val) {
       val = val + ''
       if (this.checkPara(val, this.queryInfo.searchInput)) {

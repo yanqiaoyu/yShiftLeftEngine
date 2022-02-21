@@ -14,13 +14,19 @@
           style="margin-left: 10px;"
         >{{ tag }}</el-tag>
       </div>
-      <!-- 作者，时间，阅读量 -->
       <div class="authorAndTimeAndClicks">
-        <div>作者: yanqiaoyu</div>
+        <!-- 作者 -->
+        <div>作者: {{ exp._source.author }}</div>
+
         <el-divider direction="vertical"></el-divider>
-        <div>2020-02-01 12:00:00</div>
+
+        <!-- 创建时间 -->
+        <div>{{ $timeTreatment.formatDate(exp._source.createTime) }}</div>
+
         <el-divider direction="vertical"></el-divider>
-        <div>点击量: 12</div>
+
+        <!-- 点击量 -->
+        <div>点击量: {{ exp._source.clicks }}</div>
       </div>
     </div>
 
@@ -33,6 +39,12 @@
 
       <h3>测试建议</h3>
       <div>{{ exp._source.testSuggestion }}</div>
+
+      <h3>参考资料</h3>
+      <el-link
+        @click="openNewTab(exp._source.reference)"
+        :underline="false"
+      >{{ exp._source.reference }}</el-link>
     </div>
   </div>
 </template>
@@ -54,6 +66,9 @@ export default {
     // 返回上一页
     goBack() {
       this.$router.back(-1)
+    },
+    openNewTab(url) {
+      window.open(url)
     },
   },
 }

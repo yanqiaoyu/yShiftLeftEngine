@@ -4,6 +4,8 @@ import router from './router'
 import './plugins/element.js'
 // 导入全局样式
 import './assets/css/global.css'
+// 导入时间处理模块
+import timeTreatment from './common/timeTreatment.js'
 
 // 导入axios发送ajax请求
 import axios from 'axios'
@@ -19,6 +21,8 @@ if (process.env.NODE_ENV == 'production') {
 Vue.config.productionTip = false
 // 在Vue的原型上挂载axios，让所有实例都能发送http请求
 Vue.prototype.$http = axios
+// 挂载时间处理模块
+Vue.prototype.$timeTreatment = timeTreatment
 
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */

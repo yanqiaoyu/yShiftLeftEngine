@@ -17,7 +17,7 @@
       </div>
       <div class="search-Button">
         <el-button round class="my-Button" @click="Search">开始搜索</el-button>
-        <el-button round class="my-Button" @click="SearchAll">全部展示</el-button>
+        <el-button round class="my-Button" @click="SearchAll">全部经验</el-button>
       </div>
     </div>
   </div>
