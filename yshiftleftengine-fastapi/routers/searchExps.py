@@ -19,15 +19,15 @@ async def GetSearchResult(searchInput: str = None):
                 "multi_match": {
                     "query": searchInput,
                     "fields": ["title", "background"]
+                }
+            },
+            "sort": {
+                "createTime": {
+                    "order": "desc"
                 },
-                "sort": {
-                    "createTime": {
-                        "order": "desc"
-                    },
 
-                    "_id": {
-                        "order": "desc"
-                    }
+                "_id": {
+                    "order": "desc"
                 }
             }
         }
