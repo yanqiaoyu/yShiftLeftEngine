@@ -55,7 +55,7 @@
       </el-card>
       <el-empty
         style="margin-top: 150px"
-        v-if="queryInfo.searchResult.length==0"
+        v-if="queryInfo.searchResult.length==0 && isLoading == false"
         description="Ooops,暂无相关经验,尝试搜索其他关键字,或查看所有经验"
       ></el-empty>
       <el-backtop :visibility-height="10" target=".el-scrollbar__wrap">
