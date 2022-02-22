@@ -1,5 +1,3 @@
-from cmath import sin
-from http.client import OK
 from fastapi import APIRouter
 from dao.elasticsearch.elasticsearch_base import ElasticSearchBase, expPipelineWhenCreated
 from common.read_yaml import readYamlHandler
@@ -23,4 +21,4 @@ async def PostNewExperience():
         es.InsertNewDoc(index=esIndexName, doc=singleExp,
                         pipeline=esExpPipelineName)
 
-    return {'data': '', 'meta': OK}
+    return {'data': '', 'meta': 200}

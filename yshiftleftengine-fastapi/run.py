@@ -1,5 +1,5 @@
 from common.read_yaml import readYamlHandler
-from routers import search, add
+from routers import addExps, searchExps, updateExps
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 import uvicorn
@@ -27,8 +27,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(search.searchRouter)
-app.include_router(add.addRouter)
+app.include_router(searchExps.searchRouter)
+app.include_router(addExps.addRouter)
+app.include_router(updateExps.updateRouter)
 
 
 # 初始化api服务

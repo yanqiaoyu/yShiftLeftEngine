@@ -127,11 +127,11 @@ class ElasticSearchBase:
                 result.append(index)
         return result
 
-    def GetAllDocs(self, indexName):
+    def GetAllDocs(self, indexName, body=None):
         '''
         查询特定索引下面所有的文档
         '''
-        return esHandler.search(index=indexName, size=10000)
+        return esHandler.search(index=indexName, size=10000, body=body)
 
     def GetDocsBySearchInput(self, index, body):
         '''

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body
+from fastapi import APIRouter
 from common.read_yaml import readYamlHandler
 from dao.elasticsearch.elasticsearch_base import ElasticSearchBase
 
@@ -19,6 +19,15 @@ async def GetSearchResult(searchInput: str = None):
                 "multi_match": {
                     "query": searchInput,
                     "fields": ["title", "background"]
+                },
+                "sort": {
+                    "createTime": {
+                        "order": "desc"
+                    },
+
+                    "_id": {
+                        "order": "desc"
+                    }
                 }
             }
         }
@@ -29,5 +38,20 @@ async def GetSearchResult(searchInput: str = None):
         '''
         或者全部展示
         '''
-        result = es.GetAllDocs(indexName=esIndexName)
+        body = {
+            "explain": True,
+            "query": {
+                "match_all": {}
+            },
+            "sort": {
+                "createTime": {
+                    "order": "desc"
+                },
+
+                "_id": {
+                    "order": "desc"
+                }
+            }
+        }
+        result = es.GetAllDocs(indexName=esIndexName, body=body)
         return {"data": result, "meta": {}}

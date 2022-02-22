@@ -61,6 +61,8 @@ export default {
     this.exp = this.$route.query
     console.log(this.exp)
     console.log(this.exp._id)
+    // 查看某条经验,就为这个经验的点击量+1
+    this.updateClicks(this.exp._id)
   },
 
   methods: {
@@ -70,6 +72,10 @@ export default {
     },
     openNewTab(url) {
       window.open(url)
+    },
+    async updateClicks(doc_id) {
+      console.log(doc_id)
+      await this.$http.put('update/clicks/' + doc_id)
     },
   },
 }
