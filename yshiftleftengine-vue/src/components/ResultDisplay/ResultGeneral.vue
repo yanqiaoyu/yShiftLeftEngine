@@ -1,7 +1,6 @@
 <template>
   <div class="divContainsMainAndOthers">
     <div class="mainContent">
-      <el-backtop></el-backtop>
       <!-- 有搜索内容,展示搜索结果 -->
       <div
         v-if="this.$route.query.searchInput != null && this.$route.query.searchInput != ''"
@@ -124,22 +123,70 @@ export default {
     // 高亮功能:如果标题或者背景命中了搜索的关键字,则修改样式
     showData(val) {
       val = val + ''
-      if (this.checkPara(val, this.queryInfo.searchInput)) {
-        return val.replace(
-          this.queryInfo.searchInput,
-          '<font color="#409EFF">' + this.queryInfo.searchInput + '</font>'
-        )
-      } else {
-        return val
+      var index = this.checkPara(val, this.queryInfo.searchInput)
+      // 如果包含关键字
+      if (index != -1) {
+        // 如果长度小于等于100
+        if (val.length <= 100) {
+          // 直接高亮并返回
+          return val.replace(
+            this.queryInfo.searchInput,
+            '<font color="#409EFF">' + this.queryInfo.searchInput + '</font>'
+          )
+        }
+        // 如果长度大于100
+        else {
+          // 以index为原点,向两边扩散,将长度限制在100
+          val = this.shortenStr(val, index)
+          return val.replace(
+            this.queryInfo.searchInput,
+            '<font color="#409EFF">' + this.queryInfo.searchInput + '</font>'
+          )
+        }
+      }
+      // 如果不包含关键字
+      else {
+        // 如果长度小于100
+        if (val.length <= 100) {
+          // 直接返回
+          return val
+        }
+        // 否则截取
+        else {
+          return this.shortenStr(val, 0)
+        }
       }
     },
     // 判断搜索记录是否包含某个关键字
     checkPara(val, para) {
       if (val.indexOf(para) !== -1 && para !== '') {
-        return true
+        return val.indexOf(para)
       } else {
-        return false
+        return -1
       }
+    },
+    // 字符串截取
+    shortenStr(val, index) {
+      var start, end
+      // 如果index前面不足50个字符,那么前面的部分就不截取了
+      if (index < 50) {
+        start = 0
+      }
+      // 否则,需要进行截取
+      else {
+        start = index - 50
+      }
+
+      // 如果start后面长度不足100,那么后面的部分就不截取了
+      if (val.length - start < 100) {
+        end = val.length - 1
+      }
+      // 否则,需要进行截取
+      else {
+        end = start + 100
+      }
+
+      return '...' + val.slice(start, end) + '...'
     },
   },
 }
