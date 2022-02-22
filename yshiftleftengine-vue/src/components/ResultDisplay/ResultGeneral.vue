@@ -1,5 +1,5 @@
 <template>
-  <div class="divContainsMainAndOthers">
+  <div class="divContainsMainAndOthers" v-loading="isLoading">
     <div class="mainContent">
       <!-- 有搜索内容,展示搜索结果 -->
       <div
@@ -85,6 +85,7 @@ export default {
         searchResult: [],
         searchTookTime: 0,
       },
+      isLoading: false,
     }
   },
 
@@ -112,6 +113,7 @@ export default {
       })
     },
     async SearchAll() {
+      this.isLoading = true
       const { data: res } = await this.$http.get('search')
       const exp_array = res['data']['hits']['hits']
       console.log(res['data'])
@@ -119,8 +121,11 @@ export default {
       this.queryInfo.searchTookTime = res['data']['took']
       // ES搜索的实际结果
       this.queryInfo.searchResult = exp_array
+
+      this.isLoading = false
     },
     async Search() {
+      this.isLoading = true
       const { data: res } = await this.$http.get('search', {
         params: {
           searchInput: this.queryInfo.searchInput,
@@ -132,6 +137,7 @@ export default {
       this.queryInfo.searchTookTime = res['data']['took']
       // ES搜索的实际结果
       this.queryInfo.searchResult = exp_array
+      this.isLoading = false
     },
     // 高亮功能:如果标题或者背景命中了搜索的关键字,则修改样式
     showData(val) {

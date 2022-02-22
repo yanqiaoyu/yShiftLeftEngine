@@ -15,7 +15,8 @@ import {
   Tag,
   PageHeader,
   Scrollbar,
-  Backtop
+  Backtop,
+  Loading
 } from 'element-ui'
 
 Vue.use(Button)
@@ -34,3 +35,4 @@ Vue.use(Tag)
 Vue.use(PageHeader)
 Vue.use(Scrollbar)
 Vue.use(Backtop)
+Vue.use(Loading)
