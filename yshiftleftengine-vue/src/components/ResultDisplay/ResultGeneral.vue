@@ -58,6 +58,19 @@
         v-if="queryInfo.searchResult.length==0"
         description="Ooops,暂无相关经验,尝试搜索其他关键字,或查看所有经验"
       ></el-empty>
+      <el-backtop :visibility-height="10" target=".el-scrollbar__wrap">
+        <div
+          style="{
+        height: 10%;
+        width: 100%;
+        background-color: #f2f5f6;
+        box-shadow: 0 0 6px rgba(0,0,0, .12);
+        text-align: center;
+        line-height: 40px;
+        color: #1989fa;
+      }"
+        >UP</div>
+      </el-backtop>
     </div>
     <div class="mainOthers"></div>
   </div>
