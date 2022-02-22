@@ -116,7 +116,7 @@ export default {
       this.isLoading = true
       const { data: res } = await this.$http.get('search')
       const exp_array = res['data']['hits']['hits']
-      console.log(res['data'])
+      // console.log(res['data'])
       // ES搜索的毫秒数
       this.queryInfo.searchTookTime = res['data']['took']
       // ES搜索的实际结果

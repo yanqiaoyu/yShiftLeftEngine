@@ -60,6 +60,7 @@ export default {
   created() {
     this.exp = this.$route.query
     console.log(this.exp)
+    console.log(this.exp._id)
   },
 
   methods: {

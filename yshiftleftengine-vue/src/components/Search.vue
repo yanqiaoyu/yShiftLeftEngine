@@ -47,7 +47,6 @@ export default {
     },
     // 展示所有的经验
     async SearchAll() {
-      console.log('进入Search.vue SearchAll函数')
       this.$router.push({
         path: '/results',
       })
