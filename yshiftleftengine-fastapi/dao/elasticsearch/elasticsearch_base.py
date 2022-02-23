@@ -22,7 +22,15 @@ experienceIndexMappings = {
             },
             # 参考链接
             "reference": {
-                "type": "text",
+                "type": "nested",
+                "properties": {
+                    "linkName": {
+                        "type": "text"
+                    },
+                    "linkURL": {
+                        "type": "text"
+                    },
+                },
                 # 参考链接这个字段不建立索引
                 "index": False
             },
