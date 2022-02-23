@@ -25,14 +25,17 @@ experienceIndexMappings = {
                 "type": "nested",
                 "properties": {
                     "linkName": {
-                        "type": "text"
+                        "type": "text",
+                        # 不建立索引
+                        "index": False
                     },
                     "linkURL": {
-                        "type": "text"
+                        "type": "text",
+                        # 不建立索引
+                        "index": False
                     },
                 },
-                # 参考链接这个字段不建立索引
-                "index": False
+
             },
             # 添加时间
             "createTime": {
