@@ -114,29 +114,38 @@ export default {
     },
     async SearchAll() {
       this.isLoading = true
-      const { data: res } = await this.$http.get('search')
-      const exp_array = res['data']['hits']['hits']
-      // console.log(res['data'])
-      // ES搜索的毫秒数
-      this.queryInfo.searchTookTime = res['data']['took']
-      // ES搜索的实际结果
-      this.queryInfo.searchResult = exp_array
+      try {
+        const { data: res } = await this.$http.get('search')
+        const exp_array = res['data']['hits']['hits']
+        // console.log(res['data'])
+        // ES搜索的毫秒数
+        this.queryInfo.searchTookTime = res['data']['took']
+        // ES搜索的实际结果
+        this.queryInfo.searchResult = exp_array
+      } catch (e) {
+        // console.log(e)
+      }
 
       this.isLoading = false
     },
     async Search() {
       this.isLoading = true
-      const { data: res } = await this.$http.get('search', {
-        params: {
-          searchInput: this.queryInfo.searchInput,
-        },
-      })
-      const exp_array = res['data']['hits']['hits']
-      // console.log(res['data'])
-      // ES搜索的毫秒数
-      this.queryInfo.searchTookTime = res['data']['took']
-      // ES搜索的实际结果
-      this.queryInfo.searchResult = exp_array
+
+      try {
+        const { data: res } = await this.$http.get('search', {
+          params: {
+            searchInput: this.queryInfo.searchInput,
+          },
+        })
+        const exp_array = res['data']['hits']['hits']
+        // console.log(res['data'])
+        // ES搜索的毫秒数
+        this.queryInfo.searchTookTime = res['data']['took']
+        // ES搜索的实际结果
+        this.queryInfo.searchResult = exp_array
+      } catch (e) {
+        // console.log(e)
+      }
       this.isLoading = false
     },
     // 高亮功能:如果标题或者背景命中了搜索的关键字,则修改样式
