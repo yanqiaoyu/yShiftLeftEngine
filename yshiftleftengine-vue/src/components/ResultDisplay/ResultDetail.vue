@@ -40,11 +40,13 @@
       <h3>测试建议</h3>
       <div>{{ exp._source.testSuggestion }}</div>
 
-      <h3>参考资料</h3>
+      <h3 v-if="exp._source.reference">参考资料</h3>
       <el-link
-        @click="openNewTab(exp._source.reference)"
+        v-for="reference in exp._source.reference"
+        :key="reference"
+        @click="openNewTab(reference.linkURL)"
         :underline="false"
-      >{{ exp._source.reference }}</el-link>
+      >{{ reference.linkName }}</el-link>
     </div>
   </div>
 </template>
