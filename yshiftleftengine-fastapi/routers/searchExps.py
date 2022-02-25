@@ -17,8 +17,8 @@ async def GetSearchResult(searchInput: str = None):
             body = {
                 "explain": True,
                 "query": {
-                    "multi_match": {
-                        "query": searchInput,
+                    "query_string": {
+                        "query": '*'+searchInput+'*',
                         "fields": ["title", "background"]
                     }
                 },
