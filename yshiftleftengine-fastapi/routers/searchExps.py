@@ -17,6 +17,7 @@ async def GetSearchResult(searchInput: str = None):
             body = {
                 "explain": True,
                 "query": {
+                    # 这里之前是multi_match,改成了query_string,是为了将搜索优化成支持模糊匹配
                     "query_string": {
                         "query": '*'+searchInput+'*',
                         "fields": ["title", "background"]
