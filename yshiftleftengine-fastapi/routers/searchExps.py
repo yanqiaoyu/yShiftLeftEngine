@@ -12,6 +12,7 @@ async def GetSearchResult(searchInput: str = None):
     '''
     在标题和背景中,搜素关键字
     '''
+    print("searchInput:", searchInput)
     try:
         if searchInput:
             body = {
@@ -34,7 +35,7 @@ async def GetSearchResult(searchInput: str = None):
                 }
             }
             result = es.GetDocsBySearchInput(index=esIndexName, body=body)
-            print(result)
+            # print(result)
             return {"data": result, "meta": {}}
         else:
             '''

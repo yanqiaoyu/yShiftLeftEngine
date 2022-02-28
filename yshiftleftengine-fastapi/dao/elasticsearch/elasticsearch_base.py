@@ -148,7 +148,7 @@ class ElasticSearchBase:
         '''
         根据查询名词
         '''
-        return esHandler.search(index=index, body=body)
+        return esHandler.search(index=index, size=10000, body=body)
 
     def InsertNewDoc(self, index, doc, pipeline=None):
         '''
