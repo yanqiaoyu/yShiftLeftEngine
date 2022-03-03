@@ -1,3 +1,5 @@
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from common.read_yaml import readYamlHandler
 from routers import addExps, searchExps, updateExps
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,6 +13,15 @@ sys.path.append(os.pardir)
 
 
 app = FastAPI()
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    return JSONResponse(status_code=200, content={
+                        "detail": "123",
+                        "body": "123"})
+
+
 '''
 https://fastapi.tiangolo.com/zh/tutorial/cors/
 来自官网的处理跨域请求的方法

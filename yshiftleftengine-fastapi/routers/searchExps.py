@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from common.read_yaml import readYamlHandler
 from dao.elasticsearch.elasticsearch_base import ElasticSearchBase
 
@@ -8,7 +8,7 @@ es = ElasticSearchBase()
 
 
 @searchRouter.get("/dashboard/search")
-async def GetSearchResult(searchInput: str = None):
+async def GetSearchResult(searchInput: str = Query(..., regex=r'[^`^=;,_!$%()\\.\[\]:<>《》/?~！@#￥……&*（）――|{}【】‘；：”“\'。，、？]')):
     '''
     在标题和背景中,搜素关键字
     '''
@@ -60,3 +60,6 @@ async def GetSearchResult(searchInput: str = None):
             return {"data": result, "meta": {}}
     except Exception as e:
         return {"data": [], "meta": "search fail"}
+
+if __name__ == '__main__':
+    GetSearchResult()
