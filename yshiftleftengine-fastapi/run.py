@@ -1,9 +1,11 @@
+from http.client import HTTPException
+from urllib.request import Request
+from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from common.read_yaml import readYamlHandler
 from routers import addExps, searchExps, updateExps
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
 import uvicorn
 import sys
 import os
@@ -14,11 +16,23 @@ sys.path.append(os.pardir)
 
 app = FastAPI()
 
+'''
+https://fastapi.tiangolo.com/zh/tutorial/handling-errors/
+来自官网的自定义错误请求格式的方法
+'''
+
 
 @app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc):
+async def validation_exception_handler(request: Request, exc: HTTPException):
+    '''
+    自定义参数验证失败的返回格式
+    '''
+    request.state.message = exc.errors()[0]["msg"]
+
+    print("request:", request)
+    print("exc", str(exc))
     return JSONResponse(status_code=200, content={
-                        "detail": "123",
+                        "detail": exc.errors(),
                         "body": "123"})
 
 
