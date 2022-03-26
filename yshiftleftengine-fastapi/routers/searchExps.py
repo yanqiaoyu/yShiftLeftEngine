@@ -8,7 +8,7 @@ es = ElasticSearchBase()
 
 
 @searchRouter.get("/dashboard/search")
-async def GetSearchResult(searchInput: str = Query(..., regex=r'[^`^=;,_!$%()\\.\[\]:<>《》/?~！@#￥……&*（）――|{}【】‘；：”“\'。，、？]')):
+async def GetSearchResult(searchInput: str = Query(None, regex=r'[^`^=;,_!$%()\\.\[\]:<>《》/?~！@#￥……&*（）――|{}【】‘；：”“\'。，、？]')):
     '''
     在标题和背景中,搜素关键字
     '''
