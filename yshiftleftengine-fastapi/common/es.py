@@ -13,8 +13,7 @@ class ES():
         esPort = readYamlHandler.read_conf()['elasticsearch']['esPort']
         if es == None:
             es = Elasticsearch(
-                hosts=esHost,
-                port=esPort,
+                hosts="http://"+esHost+":"+str(esPort),
             )
         return es
 

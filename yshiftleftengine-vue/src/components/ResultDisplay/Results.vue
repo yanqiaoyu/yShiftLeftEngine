@@ -25,6 +25,9 @@
         <router-view></router-view>
       </el-main>
     </el-scrollbar>
+    <el-footer>
+      <el-link @click="openNewTab('https://beian.miit.gov.cn')" class="IPC">粤ICP备2022026889号</el-link>
+    </el-footer>
   </el-container>
 </template>
 
@@ -65,6 +68,9 @@ export default {
     return2Index() {
       this.$router.replace('/')
     },
+    openNewTab(url) {
+      window.open(url)
+    },
   },
 }
 </script>
@@ -96,5 +102,15 @@ export default {
   display: flex;
   overflow: hidden;
   padding: 1px !important;
+}
+
+.el-footer {
+  height: 30px !important;
+  display: flex;
+  justify-content: center;
+}
+
+.IPC {
+  color: #999999 !important;
 }
 </style>

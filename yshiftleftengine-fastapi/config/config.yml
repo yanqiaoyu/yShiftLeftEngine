@@ -5,4 +5,4 @@ elasticsearch:
   esExpPipelineName: expPipeline
 apiService:
   bindAddress: 0.0.0.0
-  bindPort: 80
+  bindPort: 8081

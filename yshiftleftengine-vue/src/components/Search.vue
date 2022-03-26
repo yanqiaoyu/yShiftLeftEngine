@@ -1,26 +1,31 @@
 <template>
-  <div class="search-Container">
-    <div class="search-Input">
-      <div class="login-Image">
-        <!-- 登录的图片 -->
-        <img src="../assets/cat.png" alt />
+  <el-container class="search-Container" direction="vertical">
+    <el-main>
+      <div class="search-Input">
+        <div class="login-Image">
+          <!-- 登录的图片 -->
+          <img src="../assets/cat.png" alt />
+        </div>
+        <div>
+          <el-input
+            placeholder="请输入搜索内容"
+            v-model="queryInfo.searchInput"
+            class="input-with-select"
+            @keyup.enter.native="Search"
+          >
+            <el-button slot="append" icon="el-icon-search" @click="Search"></el-button>
+          </el-input>
+        </div>
+        <div class="search-Button">
+          <el-button round class="my-Button" @click="Search">开始搜索</el-button>
+          <el-button round class="my-Button" @click="SearchAll">全部经验</el-button>
+        </div>
       </div>
-      <div>
-        <el-input
-          placeholder="请输入搜索内容"
-          v-model="queryInfo.searchInput"
-          class="input-with-select"
-          @keyup.enter.native="Search"
-        >
-          <el-button slot="append" icon="el-icon-search" @click="Search"></el-button>
-        </el-input>
-      </div>
-      <div class="search-Button">
-        <el-button round class="my-Button" @click="Search">开始搜索</el-button>
-        <el-button round class="my-Button" @click="SearchAll">全部经验</el-button>
-      </div>
-    </div>
-  </div>
+    </el-main>
+    <el-footer>
+      <el-link @click="openNewTab('https://beian.miit.gov.cn')" class="IPC">粤ICP备2022026889号</el-link>
+    </el-footer>
+  </el-container>
 </template>
 
 <script>
@@ -33,6 +38,9 @@ export default {
     }
   },
   methods: {
+    openNewTab(url) {
+      window.open(url)
+    },
     // 搜索经验
     async Search() {
       // 如果没有填写搜索内容
@@ -56,6 +64,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.el-footer {
+  height: 30px !important;
+  display: flex;
+  justify-content: center;
+}
+
 .search-Container {
   //   background-color: #2b4b6b;
   height: 100%;
@@ -122,5 +136,9 @@ export default {
     border-radius: 50%;
     background-color: #eee;
   }
+}
+
+.IPC {
+  color: #999999 !important;
 }
 </style>

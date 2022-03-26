@@ -1,7 +1,7 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from common.read_yaml import readYamlHandler
 from routers import addExps, searchExps, updateExps
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
 import uvicorn
 import sys
 import os
@@ -9,8 +9,8 @@ from dao.elasticsearch.elasticsearch_base import InitElasticSearch
 # 把根目录添加进系统目录
 sys.path.append(os.pardir)
 
-
 app = FastAPI()
+
 '''
 https://fastapi.tiangolo.com/zh/tutorial/cors/
 来自官网的处理跨域请求的方法

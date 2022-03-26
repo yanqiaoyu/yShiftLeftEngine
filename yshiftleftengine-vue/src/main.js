@@ -13,9 +13,9 @@ import axios from 'axios'
 // 测试，生产环境，不同的请求的路径
 if (process.env.NODE_ENV == 'production') {
   let host = window.location.host //主机
-  axios.defaults.baseURL = 'http://' + host + '/api/auth/'
+  axios.defaults.baseURL = 'http://' + host + '/dashboard'
 } else {
-  axios.defaults.baseURL = 'http://localhost/dashboard'
+  axios.defaults.baseURL = 'http://localhost:8081/dashboard'
 }
 
 Vue.config.productionTip = false

@@ -113,38 +113,48 @@ export default {
       })
     },
     async SearchAll() {
+      console.log('此次使用的是搜索全部')
       this.isLoading = true
       try {
         const { data: res } = await this.$http.get('search')
         const exp_array = res['data']['hits']['hits']
-        // console.log(res['data'])
+        console.log('搜索到的结果如下:', res['data'])
         // ES搜索的毫秒数
         this.queryInfo.searchTookTime = res['data']['took']
         // ES搜索的实际结果
         this.queryInfo.searchResult = exp_array
       } catch (e) {
-        // console.log(e)
+        console.log('按关键字搜索出现了问题:', e)
       }
 
       this.isLoading = false
     },
     async Search() {
+      console.log('此次使用的是按关键字搜索')
       this.isLoading = true
-
       try {
         const { data: res } = await this.$http.get('search', {
           params: {
             searchInput: this.queryInfo.searchInput,
           },
         })
-        const exp_array = res['data']['hits']['hits']
-        // console.log(res['data'])
-        // ES搜索的毫秒数
-        this.queryInfo.searchTookTime = res['data']['took']
-        // ES搜索的实际结果
-        this.queryInfo.searchResult = exp_array
+        console.log(res)
+        // 如果查出来非空, 正常处理
+        if (res['data'] != null) {
+          const exp_array = res['data']['hits']['hits']
+          console.log('搜索到的结果如下:', res['data'])
+          // ES搜索的毫秒数
+          this.queryInfo.searchTookTime = res['data']['took']
+          // ES搜索的实际结果
+          this.queryInfo.searchResult = exp_array
+        }
+        // 否则按差不到东西处理
+        else {
+          this.queryInfo.searchTookTime = 0
+          this.queryInfo.searchResult = []
+        }
       } catch (e) {
-        // console.log(e)
+        console.log('按关键字搜索出现了问题:', e)
       }
       this.isLoading = false
     },
