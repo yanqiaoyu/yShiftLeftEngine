@@ -47,13 +47,14 @@ export default {
   methods: {
     // 搜索经验
     async Search() {
-      // 清除空格
-      this.queryInfo.searchInput = this.queryInfo.searchInput.trim()
       // 搜索的实际请求不要在这里做，传给下一个组件
       if (
         this.queryInfo.searchInput != null &&
         this.queryInfo.searchInput != ''
       ) {
+        // 清除空格
+        this.queryInfo.searchInput = this.queryInfo.searchInput.trim()
+
         this.$router.replace({
           path: '/resultgeneral',
           query: this.queryInfo,
