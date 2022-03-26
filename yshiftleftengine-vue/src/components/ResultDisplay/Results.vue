@@ -8,6 +8,7 @@
         :src="require('../../assets/cat.png')"
         @click.native="return2Index"
       ></el-avatar>
+      <!-- 搜索界面的输入框 -->
       <el-input
         placeholder="请输入搜索内容"
         v-model="queryInfo.searchInput"
@@ -46,6 +47,8 @@ export default {
   methods: {
     // 搜索经验
     async Search() {
+      // 清除空格
+      this.queryInfo.searchInput = this.queryInfo.searchInput.trim()
       // 搜索的实际请求不要在这里做，传给下一个组件
       if (
         this.queryInfo.searchInput != null &&
