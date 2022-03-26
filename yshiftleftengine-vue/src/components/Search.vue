@@ -49,15 +49,17 @@ export default {
       // 如果没有填写搜索内容
       if (this.queryInfo.searchInput == '') {
         this.SearchAll()
+      } else {
+        // 点击了搜索，切换到结果展示的组件，并且把搜索的内容传递过去
+        this.$router.push({
+          path: '/results',
+          query: this.queryInfo,
+        })
       }
-      // 点击了搜索，切换到结果展示的组件，并且把搜索的内容传递过去
-      this.$router.push({
-        path: '/results',
-        query: this.queryInfo,
-      })
     },
     // 展示所有的经验
     async SearchAll() {
+      console.log('在首页没有填写搜索内容,直接搜索全部结果')
       this.$router.push({
         path: '/results',
       })

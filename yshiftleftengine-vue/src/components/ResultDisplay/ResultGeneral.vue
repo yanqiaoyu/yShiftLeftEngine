@@ -124,7 +124,7 @@ export default {
         // ES搜索的实际结果
         this.queryInfo.searchResult = exp_array
       } catch (e) {
-        console.log('按关键字搜索出现了问题:', e)
+        console.log('搜索全部出现了问题:', e)
       }
 
       this.isLoading = false
