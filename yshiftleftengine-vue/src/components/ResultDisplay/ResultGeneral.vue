@@ -135,7 +135,7 @@ export default {
       try {
         const { data: res } = await this.$http.get('search', {
           params: {
-            searchInput: this.queryInfo.searchInput,
+            searchInput: this.queryInfo.searchInput.trim(),
           },
         })
         console.log(res)

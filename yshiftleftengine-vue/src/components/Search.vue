@@ -7,6 +7,7 @@
           <img src="../assets/cat.png" alt />
         </div>
         <div>
+          <!-- 首页的输入框 -->
           <el-input
             placeholder="请输入搜索内容"
             v-model="queryInfo.searchInput"
@@ -43,8 +44,10 @@ export default {
     },
     // 搜索经验
     async Search() {
+      // 清除空格
+      this.queryInfo.searchInput = this.queryInfo.searchInput.trim()
       // 如果没有填写搜索内容
-      if (this.queryInfo.searchInput.trim() == '') {
+      if (this.queryInfo.searchInput == '') {
         this.SearchAll()
       }
       // 点击了搜索，切换到结果展示的组件，并且把搜索的内容传递过去
