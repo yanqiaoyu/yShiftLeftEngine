@@ -23,7 +23,7 @@
       </div>
     </el-main>
     <el-footer>
-      <el-link @click="openNewTab('https://beian.miit.gov.cn')">粤ICP备2022026889号</el-link>
+      <el-link @click="openNewTab('https://beian.miit.gov.cn')" class="IPC">粤ICP备2022026889号</el-link>
     </el-footer>
   </el-container>
 </template>
@@ -65,6 +65,7 @@ export default {
 
 <style lang="less" scoped>
 .el-footer {
+  height: 30px !important;
   display: flex;
   justify-content: center;
 }
@@ -135,5 +136,9 @@ export default {
     border-radius: 50%;
     background-color: #eee;
   }
+}
+
+.IPC {
+  color: #999999 !important;
 }
 </style>

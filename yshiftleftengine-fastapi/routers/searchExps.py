@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Query
 from common.read_yaml import readYamlHandler
+from common.myRegex import judgeSpecChar
 from dao.elasticsearch.elasticsearch_base import ElasticSearchBase
+from fastapi.exceptions import HTTPException
 
 searchRouter = APIRouter()
 esIndexName = readYamlHandler.read_conf()['elasticsearch']['esIndexName']
@@ -8,11 +10,14 @@ es = ElasticSearchBase()
 
 
 @searchRouter.get("/dashboard/search")
-async def GetSearchResult(searchInput: str = Query(None, regex=r'[^`^=;,_!$%()\\.\[\]:<>《》/?~！@#￥……&*（）――|{}【】‘；：”“\'。，、？]')):
+async def GetSearchResult(searchInput: str = Query(None)):
     '''
     在标题和背景中,搜素关键字
     '''
     print("searchInput:", searchInput)
+    # 如果匹配到了特殊字符, raise异常
+    if judgeSpecChar(searchInput):
+        raise HTTPException(status_code=200, detail="正则校验出错")
     try:
         if searchInput:
             body = {
