@@ -15,11 +15,12 @@ async def GetSearchResult(searchInput: str = Query(None)):
     在标题和背景中,搜素关键字
     '''
     print("searchInput:", searchInput)
-    # 如果匹配到了特殊字符, raise异常
-    if judgeSpecChar(searchInput):
-        raise HTTPException(status_code=200, detail="正则校验出错")
+
     try:
         if searchInput:
+            # 如果匹配到了特殊字符, raise异常
+            if judgeSpecChar(searchInput):
+                raise HTTPException(status_code=200, detail="正则校验出错")
             body = {
                 "explain": True,
                 "query": {
