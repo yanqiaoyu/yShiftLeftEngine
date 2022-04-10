@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-myFooter.vue
+yshiftleftengine-vue/src/components/BottomBar/myFooter.vue
 
 
 # local env files
