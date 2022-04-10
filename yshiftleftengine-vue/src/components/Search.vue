@@ -24,7 +24,6 @@
       </div>
     </el-main>
     <el-footer>
-      <!-- <el-link @click="openNewTab('https://beian.miit.gov.cn')" class="IPC">粤ICP备2022026889号</el-link> -->
       <myFooter></myFooter>
     </el-footer>
   </el-container>
