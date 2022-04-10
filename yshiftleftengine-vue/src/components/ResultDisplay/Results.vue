@@ -27,13 +27,18 @@
       </el-main>
     </el-scrollbar>
     <el-footer>
-      <el-link @click="openNewTab('https://beian.miit.gov.cn')" class="IPC">粤ICP备2022026889号</el-link>
+      <my-footer></my-footer>
     </el-footer>
   </el-container>
 </template>
 
 <script>
+import myFooter from '../BottomBar/myFooter.vue'
+
 export default {
+  components: {
+    myFooter,
+  },
   data() {
     return {
       queryInfo: {
