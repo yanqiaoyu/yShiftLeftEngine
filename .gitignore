@@ -127,4 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-yshiftleftengine-vue/src/components/BottomBar/myFooter.vue
