@@ -147,8 +147,4 @@ export default {
     background-color: #eee;
   }
 }
-
-.IPC {
-  color: #999999 !important;
-}
 </style>

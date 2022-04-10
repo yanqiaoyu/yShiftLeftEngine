@@ -118,8 +118,4 @@ export default {
   display: flex;
   justify-content: center;
 }
-
-.IPC {
-  color: #999999 !important;
-}
 </style>
